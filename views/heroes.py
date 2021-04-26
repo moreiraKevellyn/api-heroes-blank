@@ -1,6 +1,8 @@
 """Heroes view"""
 from flask_restful import Resource
 from flask import request
+
+from models.hero import Hero
 from modules.hero import HeroModule
 
 
@@ -10,7 +12,20 @@ class HeroesHandler(Resource):
     def get(self):
         """Get heroes"""
         try:
-            pass
+            # Fazendo a consulta no banco de dados
+            heroes = Hero.get_heroes()
+
+            # Montando a resposta, por enquanto iremos deixar o cursor vazio
+            response = {
+                'cursor': None,
+                'heroes': []
+            }
+            # Vamos percorer os herois e transformar em json
+            for hero in heroes:
+                response['heroes'].append(hero.to_dict())
+
+            return response
+
         except Exception as error:
             return {
                        'message': 'Error on get heroes',

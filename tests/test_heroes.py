@@ -4,6 +4,7 @@ import unittest
 from mock import patch
 from mockfirestore import MockFirestore
 from main import app
+from models.hero import Hero
 
 
 class HeroesHandlerTestCase(unittest.TestCase):
@@ -42,6 +43,28 @@ class HeroesHandlerTestCase(unittest.TestCase):
         self.assertIsNotNone(response.get_json())
         self.assertIsNotNone(response.get_json()['id'])
 
+    def test_get_heroes(self):
+        """Test get this """
+        # Aqui vamos fazer um loop e criar 20 herois
+        # E o nome vai ser hero + index do loop, ex: "Hero 1"
+        for index in range(1, 21):
+            self.create_hero('Hero {0}'.format(index), 'marvel')
 
+        response = self.app.get(path='/heroes')
+        # Conferindo se voltou 200
+        self.assertEqual(response.status_code, 200)
+        # Conferindo se a chave do cursor esta retornando no json
+        self.assertIn('cursor', response.get_json())
+        # Conferindo a quantidade de herois que voltou no json
+        self.assertEqual(len(response.get_json()['heroes']), 16)
+
+    @staticmethod
+    def create_hero(hero_name, universe):
+        hero = Hero()
+        hero.name = hero_name
+        hero.description = '{0} description'.format(hero_name)
+        hero.universe = universe
+        hero.save()
+        return hero
 if __name__ == '__main__':
     unittest.main()
