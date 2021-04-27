@@ -8,7 +8,7 @@ from firebase_admin import firestore
 
 
 # Aqui iniciamos a API
-from views.heroes import HeroesHandler
+from views.heroes import HeroesHandler, HeroHandler
 
 app = Flask(__name__)
 CORS(app)
@@ -45,6 +45,7 @@ class Index(Resource):
 # Nossa primeira url
 API.add_resource(Index, '/', endpoint='index')
 API.add_resource(HeroesHandler, '/heroes',  endpoint='heroes')
+API.add_resource(HeroHandler, '/hero/<hero_id>', endpoint='hero')
 
 if __name__ == '__main__':
     # Isso é utilizado somente para executar a aplicação local. Quando
