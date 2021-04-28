@@ -1,6 +1,7 @@
 Flask==1.1.2
 flask-cors
 flask-restful
-mock
+mock~=4.0.3
 firebase_admin
 mock-firestore
+requests~=2.25.1
