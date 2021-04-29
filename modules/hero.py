@@ -49,7 +49,9 @@ class HeroModule(object):
     def format_hero_params(hero):
         """Format hero params"""
         hero.name = hero.name.title().strip()
-        hero.description = hero.description.title().strip()
+        if hero.description:
+            hero.description = hero.description.title().strip()
+
 
 
     @staticmethod
