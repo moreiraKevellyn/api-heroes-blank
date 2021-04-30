@@ -1,5 +1,6 @@
 """Hero model"""
 import uuid
+
 from modules.main import MainModule
 
 
@@ -69,3 +70,9 @@ class Hero(object):
         """Get top heroes"""
         return MainModule.get_firestore_db().collection(
             cls._collection_name).limit(20).stream()
+
+    @classmethod
+    def search_heroes(cls, name):
+        heroes = MainModule.get_firestore_db().collection(
+            cls._collection_name).where('name', '==', f'{name.title()}').limit(10).stream()
+        return heroes
