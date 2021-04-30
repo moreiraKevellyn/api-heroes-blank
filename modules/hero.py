@@ -42,7 +42,8 @@ class HeroModule(object):
         """Valid hero params"""
         if not hero.name:
             raise Exception('Bad request, name is required')
-git            raise Exception("Bad request, invalid universe")
+        if not hero.universe == 'dc' or hero.universe == 'marvel':
+            raise Exception("Bad request, invalid universe")
 
     @staticmethod
     def format_hero_params(hero):
